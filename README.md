@@ -33,7 +33,8 @@ Well first of all is actually writing the program. But neverless here are some f
 
 - [ ] Privacy features
     - I want to implement other privacy features to make it impossible for tiktok to assosiate any data. 
-    Such as
+
+    - Such as
         - Randomizing the client infromation if possible (Browser type,Screen size, platform, buildnumber ect)
         - VPN tunnels. I want to implement this with OpenVPN. The user adds the .ovpn files/urls to the program  and it randomly switches between them when scraping ( if possible )
 
