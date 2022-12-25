@@ -11,10 +11,35 @@ This project is basically scraping all the content from the website and serving 
 
 
 
-Todo / plans
+## Todo / plans
 Well first of all is actually writing the program. But neverless here are some features I want to implement in the near future. 
 
-[ ] Ai for reccomendation
+[ ] Finishing roadmap
+[ ] Ai for recommendation
 [ ] Frontend (IOS/Android/Web/Windows/Linux)
-[ ] New client/session on each request.
 
+
+## Roadmap 
+
+[ ] Finding a way to scrape data
+    - Tiktok is smart. They (such as other websites ) have implemented Anti-Scraping techniques. They use randomized classes, ids for  their elements. Example: tiktok-yf3ohr-DivContainer e1yey0rl0
+    It makes scraping harder in many ways, but after finding connections between elements you can figure out what is supossed to be what. 
+
+[ ] Removing the tiktok watermark
+    - There is some way to do it. I'm not aware of such methods rigth now.
+
+[ ] Building the API via [Rocket](https://rocket.rs)
+    - I have only built basic applications with rust so this is going to be a challange for me. I do have experience building fullstack apps with JS tho
+
+[ ] Privacy features
+    - I want to implement other privacy features to make it impossible for tiktok to assosiate any data. 
+    Such as
+        - Randomizing the client infromation if possible (Browser type,Screen size, platform, buildnumber ect)
+        - VPN tunnels. I want to implement this with OpenVPN. The user adds the .ovpn files/urls to the program  and it randomly switches between them when scraping ( if possible )
+
+
+## Why Rust?
+First, I was skeptycal about this language. But now after using it for a few projects I have realised its freaking great! Its blazing fast, the memory safety features make sense. So does the syntaxt! I could imagine myself being a Rust developer one day. +1 
+
+Yes there migth be easier languages to write this program in. 
+I know its a bit overkill. But I myself try to keep code as efficent and fast as possible no matter what!
