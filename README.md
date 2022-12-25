@@ -21,17 +21,17 @@ Well first of all is actually writing the program. But neverless here are some f
 
 ## Roadmap 
 
-[ ] Finding a way to scrape data
+- [ ] Finding a way to scrape data
     - Tiktok is smart. They (such as other websites ) have implemented Anti-Scraping techniques. They use randomized classes, ids for  their elements. Example: tiktok-yf3ohr-DivContainer e1yey0rl0
     It makes scraping harder in many ways, but after finding connections between elements you can figure out what is supossed to be what. 
 
-[ ] Removing the tiktok watermark
+- [ ] Removing the tiktok watermark
     - There is some way to do it. I'm not aware of such methods rigth now.
 
-[ ] Building the API via [Rocket](https://rocket.rs)
+- [ ] Building the API via [Rocket](https://rocket.rs)
     - I have only built basic applications with rust so this is going to be a challange for me. I do have experience building fullstack apps with JS tho
 
-[ ] Privacy features
+- [ ] Privacy features
     - I want to implement other privacy features to make it impossible for tiktok to assosiate any data. 
     Such as
         - Randomizing the client infromation if possible (Browser type,Screen size, platform, buildnumber ect)
