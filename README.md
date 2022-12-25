@@ -31,8 +31,9 @@ Well first of all is actually writing the program. But neverless here are some f
 - [ ] Building the API via [Rocket](https://rocket.rs)
     - I have only built basic applications with rust so this is going to be a challange for me. I do have experience building fullstack apps with JS tho
 
-- [ ] Privacy features
-    I want to implement other privacy features to make it impossible for tiktok to assosiate any data. 
+- [ ] Privacy features 
+    <br>
+    I want to implement other privacy features to make it harder for tiktok to assosiate any data. 
 
     - Such as
         - Randomizing the client infromation if possible (Browser type,Screen size, platform, buildnumber ect)
