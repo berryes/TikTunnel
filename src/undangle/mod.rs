@@ -56,9 +56,12 @@ pub struct Reccomendation{
 }
 pub fn recommendation(jData:serde_json::Value)-> Reccomendation {
     
-    let rec:Reccomendation = REccomendatio
+    let rec:Reccomendation;
+    let videos:serde_json::Value = jData["itemList"];
 
-    println!("touashdiuuhaosd")
+    for video in jData["itemList"].iter(){
+        println!("{}",video["id"])
+    }
     return
 }
 
