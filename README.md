@@ -9,9 +9,9 @@ Yet another project of mine (i start too many new ones and never finish either).
 ## Todo / plans
 Well first of all is actually writing the program. But neverless here are some features I want to implement in the near future. 
 
-[ ] First, finishing the roadmap 
-[ ] Ai for recommendation
-[ ] Frontend (IOS/Android/Web/Windows/Linux)
+- [ ] First, finishing the roadmap 
+- [ ] Ai for recommendation
+- [ ] Frontend (IOS/Android/Web/Windows/Linux)
 
 
 ## Roadmap 
