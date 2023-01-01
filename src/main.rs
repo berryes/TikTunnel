@@ -42,61 +42,84 @@ sad
 
 https://rocket.rs 
 */
-use reqwest::Client;
+
+use std::string;
+
+use reqwest::{Client, ClientBuilder};
 use reqwest::header::HeaderMap;
+use rocket::http::Status;
+use rocket::response::{status, content};
 use serde_json::{Value};
+use undangle::Reccomendation;
 
+use rocket::serde::json::Json;
 
-
+use rocket::tokio::time::{sleep, Duration};
 
 mod undangle;
 
-#[tokio::main]
-async fn main() -> Result<(), Box<dyn std::error::Error>> {
+
+
+#[macro_use] extern crate rocket;
+
+
+// Api route of recommend
+#[get("/api/recommend")]
+async fn recommend() -> Json<Reccomendation> {
+
+    let timeout = Duration::new(5,0);
+
+    let client =  ClientBuilder::new().timeout(timeout).build().expect("no client xd");
    
-    
 
-
-    let client:Client = reqwest::Client::new();
     let highway: String = String::from("https://www.tiktok.com/api/recommend/item_list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-US&browser_name=Mozilla&browser_online=true&browser_platform=Win32&browser_version=5.0%20%28Windows%29&channel=tiktok_web&cookie_enabled=true&count=9&device_id=7181251537108059653&device_platform=web_mobile&focus_state=true&from_page=fyp&history_len=2&is_fullscreen=false&is_page_visible=true&os=android&priority_region=&referer=&region=DE&screen_height=883&screen_width=412&tz_name=Europe%2FBudapest&webcast_language=en&msToken=64EFVpph0PFaRtXb68BPf7TiffeAkxUE-6uxgAfQeBBMHeu717tNpRGaMi8J8x2aP91jLzMoKYby3kcLbOTROCAn2ehVWCoSwclPmRhznT6Yr6K9XU-ErWWCfhZ6W6ClSIJM7zK8HJdFtFbbtw==&X-Bogus=DFSzKIVOxczANeMeSkV9EGO8kJ0E&_signature=_02B4Z6wo00001GjktBwAAIDBdKcKo9ZSJwxo9bCAAHmb35");
    
     let mut headers = HeaderMap::new();
     headers.insert("User-Agent",  String::from("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0").parse().unwrap());
 
-  
+    
+    
 
-    let response = client.get(highway)
+    let response: String = client.get(highway)
     .headers(headers)
     .send()
-    .await?
+    .await.expect("Failed to recive response from tiktok recommendation")
     .text()
-    .await?;
+    .await.expect("Failed to convert string " /*   status::Custom(Status::InternalServerError,  content::RawJson ( "asd" ) ) */  );
     
-    
+
+
+
+
+
     // spent like 2 hours figuring this out btw
     // i mean how to convert a string to json
-    let data: Value = serde_json::from_str(&response.as_str())?;
 
-    let video = &data["itemList"][0];
-    
-
-/*     let videos:Vec<Video> = Vec::new(); */
+    let data: Value = serde_json::from_str(&response.as_str()).expect("failed to convert to json");
 
 
 
     // a json value is sent into it( in this case a recommendation tree and it spits out the object)
-    undangle::recommendation(data);
+    let rec: Reccomendation =  undangle::recommendation(data);
 
 
-  /*   println!("{:?}",recommendation); */
-
-/* 
-    let response_data: Value = serde_json::from_str(&response)?; */
+ /*    let json_outcome: String = serde_json::to_string(&rec).unwrap(); */
 
 
 
-/*     println!("{:?}", response_data["itemList"]); */
-
-    Ok(())
+    Json(rec)
 
 }
+
+
+// building rocket project
+#[rocket::main]
+async fn main() -> Result<(), rocket::Error> {
+    let _rocket = rocket::build()
+        .mount("/", routes![recommend])
+        .launch()
+        .await?;
+
+    Ok(())
+}
+
