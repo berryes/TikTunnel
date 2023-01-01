@@ -14,3 +14,12 @@ serde = { version = "1.0.152", features = ["derive"] } # seralizing/deseralizing
 serde_json = "1.0" # json stuff
 
 rocket = { version = "0.5.0-rc.2", features = ["secrets","json"] } # API/HTTP framework stuff
+
+
+chrono = "0.4.23" # for  time
+
+
+url = "2.3.1" # adding queries/params to url
+
+
+rand = "0.8.5" # random numeru generator xd

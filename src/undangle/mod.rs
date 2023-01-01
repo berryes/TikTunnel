@@ -44,13 +44,17 @@ pub struct Video{
 #[derive(Serialize, Deserialize, Debug)]
 pub struct Reccomendation{
     videos: Vec<Video>,
+    response_time: i128,
 }
 
 pub fn recommendation(jData:serde_json::Value) -> Reccomendation {
     
     let videos:Vec<Video> = Vec::new();
 
-    let mut rec:Reccomendation = Reccomendation{videos};
+    let mut rec:Reccomendation = Reccomendation{
+        videos: videos,
+        response_time: 0,
+    };
 
     let videos:serde_json::Value = jData["itemList"].clone();
     
