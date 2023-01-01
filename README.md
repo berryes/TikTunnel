@@ -41,3 +41,7 @@ Well first of all is actually writing the program. But neverless here are some f
 
 ## Why Rust?
 First, I was skeptycal about this language. But now after using it for a few projects I have realised its freaking great! Its blazing fast, the memory safety features make sense. So does the syntaxt! I could imagine myself being a Rust developer one day. +1 
+
+# API
+
+[![Run in Postman](https://run.pstmn.io/button.svg)](https://app.getpostman.com/run-collection/21747798-9ad12351-8864-489b-9bac-bbe175875adb?action=collection%2Ffork&collection-url=entityId%3D21747798-9ad12351-8864-489b-9bac-bbe175875adb%26entityType%3Dcollection%26workspaceId%3D456bdba7-0741-4ccb-a8ad-40dcec1eb317)
