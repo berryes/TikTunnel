@@ -32,15 +32,16 @@
 
 
 
-use rand::Rng;
-fn generate_element( avail:serde_json::Value) -> serde_json::Value {
+use rand::{Rng, rngs::ThreadRng};
+fn generate_element( avail:serde_json::Value) -> String {
     
-    let mut rng = rand::thread_rng();
+    let mut rng:ThreadRng = rand::thread_rng();
 
     
-    let numero = rng.gen_range(0..=avail.as_array().expect("Failed to convert appLanguages/region to object").len() );
+    let numero: usize = rng.gen_range(0..=avail.as_array().expect("Failed to convert appLanguages/region to object").len() );
 
-    return avail[numero].clone();
+
+    return avail[numero].clone().to_string();
 }
 
 pub fn query( mut choso:serde_json::Value ) -> Vec<Vec<String>> {
@@ -54,21 +55,22 @@ pub fn query( mut choso:serde_json::Value ) -> Vec<Vec<String>> {
 
     // generating app_language and much more..
 
-    params.push( vec![ String::from("app_language"), generate_element( raktestu["appLanguages/region"].clone() ).to_string() ] );
-    params.push( vec![ String::from("browser_language"), generate_element( raktestu["appLanguages/region"].clone() ).to_string() ] );
+
+    params.push( vec![ String::from("app_language"), generate_element( raktestu["appLanguages/region"].clone() ) ] );
+    params.push( vec![ String::from("browser_language"), generate_element( raktestu["appLanguages/region"].clone() ) ] );
     
     params.push( vec![ String::from("browser_name"), generate_element( raktestu["browsers"].clone() ).to_string() ] );
 
     // oh yes. nested code
-    params.push( vec![ String::from("browser_version"), format!("{} ({})", generate_element( raktestu["browser_versions"].clone() ).to_string(), generate_element( raktestu["fullPlatform"].clone() ).to_string()) ] );
+    params.push( vec![ String::from("browser_version"), format!("{} ({})", generate_element( raktestu["browser_versions"].clone() ).trim(),  generate_element( raktestu["fullPlatform"].clone() ).trim() ) ] );
 
 
     params.push( vec![ String::from("screen_height"), rng.gen_range(400..=3440).to_string() ] );
     params.push( vec![ String::from("screen_width"), rng.gen_range(400..=3440).to_string() ] );
 
 
-    params.push( vec![ String::from("tz_name"), generate_element( raktestu["tz_names"].clone() ).to_string() ] );
-    params.push( vec![ String::from("webcast_language"), generate_element( raktestu["appLanguages/region"].clone() ).to_string() ] );
+    params.push( vec![ String::from("tz_name"), generate_element( raktestu["tz_names"].clone() ) ] );
+    params.push( vec![ String::from("webcast_language"), generate_element( raktestu["appLanguages/region"].clone() ) ] );
 
 
     

@@ -84,7 +84,7 @@ async fn recommend() -> Json<Reccomendation> {
 
     
 
-    let mut baseURL = Url::parse("https://www.tiktok.com/api/recommend/item_list/").expect("failed to parse url");
+    let mut baseURL = Url::parse("https://www.tiktok.com/api/recommend/item_list/?aid=1988&device_id=7181251537108059653&count=9").expect("failed to parse url");
 
 
     let mut randoms:String = String::new(); 
@@ -92,23 +92,24 @@ async fn recommend() -> Json<Reccomendation> {
 
     
     let mut generator: serde_json::Value =  serde_json::from_str( randoms.as_str() ).expect("JSON was not well-formatted");
-   
+
     let params =  faker::query(generator);
 
-    println!("{:?}",params);
+    let mut queryStack: String = String::new();
+    // TODO: remove "" from string. idk bro
     for param in params {
-        baseURL.set_query( Some( format!("{}={}", param[0],param[1] ).as_str() ) );
-        println!("{:?}", param);
-    };
+        
+        queryStack.push_str(param[0].as_str());
+        queryStack.push_str("=");
+        queryStack.push_str(param[1].as_str());
+        queryStack.push_str("&");
 
-
-    println!("{}",baseURL);
-
-
+/*         queryStack.push_str( format!("{}={}&", param[0].trim(),param[1].trim() ).as_str() );
+ */    };
+    println!("{}", queryStack);
+    baseURL.set_query( Some( queryStack.as_str() ) );
 
     println!("{}", baseURL);
-/*     let processTime = chrono::offset::Utc::now();
- */
 
 
     let response: String = client.get(highway)
