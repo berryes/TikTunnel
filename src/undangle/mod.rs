@@ -37,31 +37,35 @@ struct Video{
     stream: Stream,
 }
 
-#[derive(Debug)]
-struct Recommendation{
-    videos: Vec<Video>,
-}
-
-
-fn getFuckingString(stringbs:serde_json::Value) -> String{
-
-    let bs:String = stringbs.to_string();
-
-    return bs;
-}
 
 
 pub struct Reccomendation{
-
+    videos: Vec<Video>,
 }
-pub fn recommendation(jData:serde_json::Value)-> Reccomendation {
+
+pub fn recommendation(jData:serde_json::Value) {
     
     let rec:Reccomendation;
-    let videos:serde_json::Value = jData["itemList"];
 
-    for video in jData["itemList"].iter(){
-        println!("{}",video["id"])
+    let videos:serde_json::Value = jData["itemList"].clone();
+    
+    for video in videos.as_array().unwrap().iter(){
+        
+        let author: Author = Author { 
+            nickname: video["author"]["nickname"],
+            avatarLarge: (),
+            avatarMedium: (),
+            avatarThumb: (),
+            description: (),
+            username: ()
+        };
+
+        // crerate recomendation
+        println!("{:?}",video.get( "author" ))
+        
+
     }
-    return
+
+
 }
 

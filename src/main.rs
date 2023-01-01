@@ -47,8 +47,7 @@ use reqwest::header::HeaderMap;
 use serde_json::{Value};
 
 
-// Video -> Author
-#[derive(Debug)]
+
 
 mod undangle;
 
@@ -81,41 +80,15 @@ async fn main() -> Result<(), Box<dyn std::error::Error>> {
     let video = &data["itemList"][0];
     
 
-    let videos:Vec<Video> = Vec::new();
+/*     let videos:Vec<Video> = Vec::new(); */
+
 
 
     // a json value is sent into it( in this case a recommendation tree and it spits out the object)
-    undangle::recommendation();
+    undangle::recommendation(data);
 
-    let asd:Video  = Video{
-        stats: Stat{
-            comments: getFuckingString(video),
-            played: video["stats"]["playCount"],
-            shares: video["stats"]["shareCount"],
-        },
-        author: Author { 
-            nickname: getFuckingString(video["author"]["nickname"]), 
-            avatarLarge: video["author"]["avatarLarger"].to_string(), 
-            avatarMedium: video["author"]["avatarMedium"].to_string(), 
-            avatarThumb: video["author"]["avatarThumb"].to_string(),
-            description: video["author"]["signature"].to_string(),
-            username: video["author"]["uniqueId"].to_string()
-         },
-         stream: Stream {
-             cover: video["video"]["cover"].to_string(),
-              urls: video["video"]["bitrateInfo"][0]["playAddr"][0],
-               heigth: video["video"]["heigth"],
-                width: video["video"]["width"] }
-    };
 
-    videos.push(asd);
-
-    let recommendation: Recommendation = Recommendation { 
-        videos: videos
-     };
-
-    
-    println!("{:?}",recommendation);
+  /*   println!("{:?}",recommendation); */
 
 /* 
     let response_data: Value = serde_json::from_str(&response)?; */
