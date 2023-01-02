@@ -4,7 +4,7 @@
 API for scraping tiktoks.
 This program scrapes information from Tiktok and serves an endpoint to safely view the content. 
 
-![Matrix](https://img.shields.io/matrix/tiktunnel?color=%23F39237&server_fqdn=matrix.berryez.xyz&style=for-the-badge)
+![Matrix](https://img.shields.io/matrix/tiktunnel?color=%23F39237&server_fqdn=matrix.berryez.xyz&style=for-the-badge&url=https%3A%2F%2Fmatrix.to%2F%23%2F%23tiktunnel%3Aberryez.xyz)
  ![GitHub issues](https://img.shields.io/github/issues/berryes/tiktunnel?color=%23BF1363&style=for-the-badge)
 
 Yet another project of mine (i start too many new ones and never finish either).
