@@ -1,7 +1,11 @@
-# TikTunnel
- API for scraping tiktoks.
+ 
+<h1 align="center"> TikTunnel </h1>
+
+API for scraping tiktoks.
 This program scrapes information from Tiktok and serves an endpoint to safely view the content. 
 
+![Matrix](https://img.shields.io/matrix/tiktunnel?color=%23F39237&server_fqdn=matrix.berryez.xyz&style=for-the-badge)
+ ![GitHub issues](https://img.shields.io/github/issues/berryes/tiktunnel?color=%23BF1363&style=for-the-badge)
 
 Yet another project of mine (i start too many new ones and never finish either).
 

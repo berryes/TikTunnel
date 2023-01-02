@@ -1,0 +1,17 @@
+[default]
+address = "127.0.0.1"
+port = 1337
+max_blocking = 512
+keep_alive = 5
+ident = "TikTunnel"
+log_level = "normal"
+temp_dir = "/tmp"
+cli_colors = true
+
+
+[default.limits]
+form = "128 kB"
+json = "10 MiB"
+msgpack = "20 MiB"
+"file/jpg" = "15 MiB"
+
