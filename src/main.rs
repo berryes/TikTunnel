@@ -43,21 +43,21 @@ sad
 https://rocket.rs 
 */
 
-use std::string;
-
-use reqwest::{Client, ClientBuilder};
-use reqwest::header::HeaderMap;
-use rocket::http::Status;
+use chrono::format;
+// imports
+use rand::random;
+use reqwest::{Client, ClientBuilder, Url};
 use rocket::response::{status, content};
 use serde_json::{Value};
+use std::{fs::File, io::Read};
 use undangle::Reccomendation;
-
-use rocket::serde::json::Json;
-
 use rocket::tokio::time::{sleep, Duration};
-
+use reqwest::header::HeaderMap;
+use rocket::serde::json::Json;
+use faker::user_agent;
+// modules
 mod undangle;
-
+mod faker;
 
 
 #[macro_use] extern crate rocket;
@@ -67,18 +67,50 @@ mod undangle;
 #[get("/api/recommend")]
 async fn recommend() -> Json<Reccomendation> {
 
+    
     let timeout = Duration::new(5,0);
 
     let client =  ClientBuilder::new().timeout(timeout).build().expect("no client xd");
    
+    
+
 
     let highway: String = String::from("https://www.tiktok.com/api/recommend/item_list/?aid=1988&app_language=en&app_name=tiktok_web&browser_language=en-US&browser_name=Mozilla&browser_online=true&browser_platform=Win32&browser_version=5.0%20%28Windows%29&channel=tiktok_web&cookie_enabled=true&count=9&device_id=7181251537108059653&device_platform=web_mobile&focus_state=true&from_page=fyp&history_len=2&is_fullscreen=false&is_page_visible=true&os=android&priority_region=&referer=&region=DE&screen_height=883&screen_width=412&tz_name=Europe%2FBudapest&webcast_language=en&msToken=64EFVpph0PFaRtXb68BPf7TiffeAkxUE-6uxgAfQeBBMHeu717tNpRGaMi8J8x2aP91jLzMoKYby3kcLbOTROCAn2ehVWCoSwclPmRhznT6Yr6K9XU-ErWWCfhZ6W6ClSIJM7zK8HJdFtFbbtw==&X-Bogus=DFSzKIVOxczANeMeSkV9EGO8kJ0E&_signature=_02B4Z6wo00001GjktBwAAIDBdKcKo9ZSJwxo9bCAAHmb35");
    
+
+
     let mut headers = HeaderMap::new();
-    headers.insert("User-Agent",  String::from("Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:108.0) Gecko/20100101 Firefox/108.0").parse().unwrap());
+    headers.insert("User-Agent", String::from("Mozilla/5.0 (Windows NT 10.0; WOW64; Trident/7.0; rv:11.0) like Gecko").parse().unwrap() );
 
     
+
+    let mut baseURL = Url::parse("https://www.tiktok.com/api/recommend/item_list/?aid=1988&device_id=7181251537108059653&count=9").expect("failed to parse url");
+
+
+    let mut randoms:String = String::new(); 
+    File::open("random.json").unwrap().read_to_string(&mut randoms).expect("failed to read random.json as string");
+
     
+    let mut generator: serde_json::Value =  serde_json::from_str( randoms.as_str() ).expect("JSON was not well-formatted");
+
+    let params =  faker::query(generator);
+
+    let mut queryStack: String = String::new();
+    // TODO: remove "" from string. idk bro
+    for param in params {
+        
+        queryStack.push_str(param[0].as_str());
+        queryStack.push_str("=");
+        queryStack.push_str(param[1].as_str());
+        queryStack.push_str("&");
+
+/*         queryStack.push_str( format!("{}={}&", param[0].trim(),param[1].trim() ).as_str() );
+ */    };
+    println!("{}", queryStack);
+    baseURL.set_query( Some( queryStack.as_str() ) );
+
+    println!("{}", baseURL);
+
 
     let response: String = client.get(highway)
     .headers(headers)
@@ -101,6 +133,7 @@ async fn recommend() -> Json<Reccomendation> {
 
     // a json value is sent into it( in this case a recommendation tree and it spits out the object)
     let rec: Reccomendation =  undangle::recommendation(data);
+    
 
 
  /*    let json_outcome: String = serde_json::to_string(&rec).unwrap(); */
@@ -112,7 +145,7 @@ async fn recommend() -> Json<Reccomendation> {
 }
 
 
-// building rocket project
+// building the rocket project
 #[rocket::main]
 async fn main() -> Result<(), rocket::Error> {
     let _rocket = rocket::build()

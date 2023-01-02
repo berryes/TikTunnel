@@ -1,17 +1,20 @@
-# TikTunnel
- API for scraping tiktoks.
-This program scrapes information from Tiktok and serves an endpoint to safely view the content. 
+ 
+<h1 align="center"> TikTunnel </h1>
+
+An API for scraping tiktoks written in Rust!
+
+This program scrapes data from Tiktok and serves an endpoint to safely view the content. 
 
 
-Yet another project of mine (i start too many new ones and never finish either).
+ ![GitHub issues](https://img.shields.io/github/issues/berryes/tiktunnel?color=%23BF1363&style=for-the-badge) ![GitHub last commit](https://img.shields.io/github/last-commit/berryes/tiktunnel?color=%23BF1363&logoColor=%23BF1363&style=for-the-badge) ![GitHub](https://img.shields.io/github/license/berryes/tiktunnel?color=%23BF1363&logoColor=%23BF1363&style=for-the-badge)
 
 
 ## Todo / plans
 Well first of all is actually writing the program. But neverless here are some features I want to implement in the near future. 
 
-- [ ] First, finishing the roadmap 
-- [ ] Ai for recommendation
-- [ ] Frontend (IOS/Android/Web/Windows/Linux)
+- [ ]  Finishing the roadmap 
+- [ ] Ai for recommendation?
+- [ ] Frontend (IOS/Android/Web/Windows/Linux)?
 
 
 ## Roadmap 
@@ -26,11 +29,12 @@ Well first of all is actually writing the program. But neverless here are some f
 
 - [ ] Overcoming being ip/request banned 
     <br>
-    - Such as
+    - With 
         - Randomizing the client infromation if possible (Browser type,Screen size, platform, buildnumber ect)
 
         - VPNs/Proxies
             via OpenVPN and reqwest proxy.
+
 
 - Unsure / Migth abandon
     - [ ]   Creating workers
