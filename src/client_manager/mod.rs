@@ -3,6 +3,18 @@ use sqlite::Connection;
 
 use crate::{DAO, scraper, faker};
 
+/* classDiagram
+    class Client {
+      id String
+      cookie String
+      usageCount i128
+      usageMax i128
+      userAgent String 
+     - available()
+     - used()
+    } */
+
+    
 // same layout as in DB
 pub struct SClient{
     pub id: String, // uuid

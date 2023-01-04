@@ -13,10 +13,9 @@
 </h1>
 
 
-An API for scraping tiktoks written in Rust!
+An API for scraping tiktoks (written in Rust!)
 
 This program scrapes data from Tiktok and serves an endpoint to safely view the content. 
-
 
 
 ## Todo / plans
