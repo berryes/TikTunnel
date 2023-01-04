@@ -71,9 +71,10 @@ async fn recommend() -> Json<Reccomendation> {
     let mut client = client_manager::get()
     .await;    
 
-    let paramus =  vec![String::from("gyaszrak")];
+    let paramus:String =  faker::query();
+    
     // scraping from tiktok.com/api/recommend.....
-    let rec = scraper::recommend(paramus, client)
+    let rec:Reccomendation = scraper::recommend(paramus, client)
     .await;
 
     // replying to the request with the proxied data

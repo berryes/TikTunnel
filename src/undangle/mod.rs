@@ -1,3 +1,5 @@
+use core::panic;
+
 use rocket::serde::{Deserialize,Serialize};
 
 // this below me allows to to magik
@@ -57,7 +59,10 @@ pub fn recommendation(jData:serde_json::Value) -> Reccomendation {
     };
 
     let videos:serde_json::Value = jData["itemList"].clone();
-    
+/*     if !videos{
+        panic("no videos sent")
+    }
+ */
     for video in videos.as_array().unwrap().iter(){
         let authorData = &video["author"];
 

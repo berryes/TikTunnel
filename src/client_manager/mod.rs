@@ -21,43 +21,79 @@ pub struct SClient{
     pub cookie: String,
     pub usageCount: i128,
     pub usageMax: i128,
-    pub userAgent: String
+    pub userAgent: String,
 }
 
 
-pub trait usage {
+// DATA CONTROLLER
+pub trait DC {
      fn available(&self) -> bool; // returns if you can use this client
-     fn used(&self)-> bool; // returns increases client usageCount in db by +1
+     fn used(self); // returns increases client usageCount in db by +1
+     fn destory(&self); // thanos snap from db
+     fn record(&self); // put in database
 }
 
-impl usage for SClient{
+impl DC for SClient{
+    fn record(&self) {
+        let connection: Connection = sqlite::open("database.sqlite").unwrap();
+        let query:String = format!( "INSERT INTO clients VALUES ('{}','{}',{},{},'{}')",
+        &self.id,
+        &self.cookie,
+        &self.usageCount,
+        &self.usageMax,
+        &self.userAgent);
+
+        connection.execute(query).expect("Failed to add client to db");
+    }
+
+    fn destory(&self) {
+        let connection: Connection = sqlite::open("database.sqlite").unwrap();
+        connection.execute(format!("DELETE FROM clients WHERE id = '{}' ",&self.id) )
+        .expect("Failed to destroy client");
+        
+        // inserting into used
+        let query:String = format!( "INSERT INTO usedClients VALUES ('{}','{}',{},{},'{}')",
+        &self.id,
+        &self.cookie,
+        &self.usageCount,
+        &self.usageMax,
+        &self.userAgent);
+
+        connection.execute(query).expect("Failed to add client to db");
+    }
 
      fn available(&self) -> bool{
 
         let connection: Connection = sqlite::open("database.sqlite").unwrap();
-        let mut usageCount:i128 = 0;
 
-        connection
-        .iterate(format!("SELECT usageCount,usageMax FROM clients WHERE id = '{}' ",&self.id), |pairs| {
-            for &(name, value) in pairs.iter() {
-                if name == "usageCount" {
-                    usageCount = value.unwrap().parse::<i128>().expect("Faiiled to parse usageCount");
-                }else{
-                    if usageCount+1 > value.unwrap().parse::<i128>().expect("failed to parse"){
-                        return false
-                    }
-
-                }
+        for row in connection
+        .prepare(format!("SELECT usageCount,usageMax FROM clients WHERE id = '{}'",&self.id))
+        .unwrap()
+        .into_iter()
+        .map(|row| row.unwrap())
+        {
+            if row.read::<i64, _>("usageCount") +1 > row.read::<i64, _>("usageMax"){
+                return false;
             }
-            true
-        })
-        .unwrap();
-
-        return true
+            return true
+        }
+        
+    return true
+    
     }
-     fn used(&self) -> bool{
+     fn used(self){
+        // suicide
+        if self.usageCount +1 > self.usageMax {
+            self.destory();
+            println!("SUICIDEEEE! ")
+        }else{
+            let connection: Connection = sqlite::open("database.sqlite").unwrap();
+            connection.execute(format!("UPDATE clients
+            SET usageCount = usageCount + 1
+            WHERE id = '{}'",self.id)).expect("Failed to increase the count");
+        }
 
-        return false
+
     }
 }
 
@@ -73,12 +109,14 @@ pub async fn get() -> SClient{
     // getting a random client from the database
     let mut clientData = DAO::getRandom(String::from("clients"));
    
+    
+
     // handeling errors
     match clientData {
         // if a client was found
         Ok(map) =>{
-            println!("Found a client!");
-
+            
+            
             // create client from data
             client = SClient{
                 id: map.get("id").expect("Failed to get client ID from map").to_owned(),
@@ -90,15 +128,13 @@ pub async fn get() -> SClient{
                 .parse::<i128>().expect("failed to parse integer from string"),
                 
                 usageMax: map.get("usageMax").expect("Failed to convert userAgent").to_owned()
-                .parse::<i128>().expect("failed to parse integer from string")
-
+                .parse::<i128>().expect("failed to parse integer from string"),
             };
 
-           /*  let avail = client.available(); */
+
 
         } // ok
-
-
+    
         // If no client was found
         Err(error) =>{
             println!("No client available, geenrating one!");
@@ -134,18 +170,9 @@ pub async fn get() -> SClient{
                 usageCount: 0,
                 usageMax: i128::try_from(maxUse).unwrap(),
             };
-
-
-            // Creating database connection -> creating client entry/row   
-            let connection: Connection = sqlite::open("database.sqlite").unwrap();
-            let query:String = format!( "INSERT INTO clients VALUES ('{}','{}',{},{},'{}')",
-            client.id,
-            client.cookie,
-            client.usageCount,
-            client.usageMax,
-            client.userAgent);
-
-            connection.execute(query).expect("Failed to add client to db");
+            
+            // adding to db
+            client.record();
 
 /*             println!("cookies given by tiktok: {:?} \n agent used: {}",cookies,agent);
  */        }
@@ -153,5 +180,5 @@ pub async fn get() -> SClient{
 
     // returning finished client
     return client;
-}
 
+}

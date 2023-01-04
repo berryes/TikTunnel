@@ -36,7 +36,6 @@ pub fn getRandom(table:String) -> Result<HashMap<String,String>,bool>{
     connection
     .iterate(query, |pairs| {
         for &(name, value) in pairs.iter() {
-
             data.insert(name.to_string(), value.unwrap().to_string());
         }
         true
@@ -57,10 +56,9 @@ pub fn initDB(){
     let connection: Connection = sqlite::open("database.sqlite").unwrap();
     
     connection.execute("
-    CREATE TABLE IF NOT EXISTS clients (id TEXT,cookie TEXT, usageCount INTEGER,usageMax INTEGER, userAgent TEXT);
-    CREATE TABLE IF NOT EXISTS usedClients (id TEXT,cookie TEXT, usageCount INTEGER, userAgent TEXT);
-
-
+    CREATE TABLE IF NOT EXISTS clients (id TEXT,cookie TEXT, usageCount INTEGER,usageMax INTEGER, userAgent TEXT, PRIMARY KEY (id));
+    CREATE TABLE IF NOT EXISTS usedClients (id TEXT,cookie TEXT, usageCount INTEGER,usageMax INTEGER, userAgent TEXT, PRIMARY KEY (id));
+    
     ")
     .unwrap();
 
