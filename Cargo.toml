@@ -23,3 +23,6 @@ url = "2.3.1" # adding queries/params to url
 
 
 rand = "0.8.5" # random numeru generator xd
+
+
+sqlite = "0.30.3" # Database

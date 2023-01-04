@@ -1,27 +1,13 @@
 
+1. Api request comes in (example: https://whatever.media/api/recommend)
 
-1, We visit the [website](https://tiktok.com) and scrape the cookie 
-    - We will use the cookie to request data straigth from the backend skipping the painful method of crawling in the html tree and extracting from there.
+2. Check if there is any clients available? (cookies)
+    - TRUE | if there isn't one
+        - scrape a cookie via a randomized user agent, create a profile for that client in tha database and also set a request counter to 0. after a certain requests which is random the client is dropped/deleted.
+        then create the client in the program
+    - FALSE | if there is 
+        - create the client and set the user agent header
 
-2, Getting reccomended via the cookie (https://www.tiktok.com/api/recommend/item_list/)
+3. Scrape data via the client and modify the usageCount++ 
+    - if the usegeCount hits the limit, delete the client
 
-3, Snipping the data so only necesarry information (likes,cover,music,video, uploader ect) is left.
-    - To reduce data transerred.
-
-
-
-
-
-
-
-Routes
-
-Recommended
-https://www.tiktok.com/api/recommend/item_list/
-    - Required Params:
-        - aid: 1988
-        - count: 9
-
-    - Could be useful
-        - region: DE,HU ect..
-        - os: android 
