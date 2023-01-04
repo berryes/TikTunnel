@@ -23,3 +23,21 @@ url = "2.3.1" # adding queries/params to url
 
 
 rand = "0.8.5" # random numeru generator xd
+
+
+sqlite = "0.30.3" # Database
+
+
+dotenv = "0.15.0" # envioroment or whatever variables
+
+
+async-trait = "0.1.60"
+
+
+[dependencies.uuid]
+version = "1.2.2"
+features = [
+    "v4",                # Lets you generate random UUIDs
+    "fast-rng",          # Use a faster (but still sufficiently random) RNG
+    "macro-diagnostics", # Enable better diagnostics for compile-time UUIDs
+]
