@@ -52,8 +52,7 @@ Well first of all is actually writing the program. But neverless here are some f
 
 
 
-## Why Rust?
-First, I was skeptycal about this language. But now after using it for a few projects I have realised its freaking great! Its blazing fast, the memory safety features make sense. So does the syntaxt! I could imagine myself being a Rust developer one day. +1 
+
 
 # API
 
