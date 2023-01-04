@@ -1,12 +1,22 @@
  
-<h1 align="center"> TikTunnel </h1>
+<p align="center">
+<img  src="https://github.com/berryes/TikTunnel/blob/main/logo.png?raw=true"  width="160">
+</p>
+
+<h1 align="center"> TikTunnel 
+
+<br>
+
+
+ ![GitHub issues](https://img.shields.io/github/issues/berryes/tiktunnel?color=%23BF1363&style=for-the-badge) ![GitHub last commit](https://img.shields.io/github/last-commit/berryes/tiktunnel?color=%23BF1363&logoColor=%23BF1363&style=for-the-badge) ![GitHub](https://img.shields.io/github/license/berryes/tiktunnel?color=%23BF1363&logoColor=%23BF1363&style=for-the-badge)
+
+</h1>
+
 
 An API for scraping tiktoks written in Rust!
 
 This program scrapes data from Tiktok and serves an endpoint to safely view the content. 
 
-
- ![GitHub issues](https://img.shields.io/github/issues/berryes/tiktunnel?color=%23BF1363&style=for-the-badge) ![GitHub last commit](https://img.shields.io/github/last-commit/berryes/tiktunnel?color=%23BF1363&logoColor=%23BF1363&style=for-the-badge) ![GitHub](https://img.shields.io/github/license/berryes/tiktunnel?color=%23BF1363&logoColor=%23BF1363&style=for-the-badge)
 
 
 ## Todo / plans
