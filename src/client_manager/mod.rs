@@ -12,21 +12,30 @@ pub struct SClient{
     pub userAgent: String
 }
 
-#[async_trait]
-trait usage {
-    async fn available(&self) -> bool; // returns if you can use this client
-    async fn used(&self)-> bool; // returns increases client usageCount in db by +1
+
+pub trait usage {
+     fn available(&self) -> bool; // returns if you can use this client
+     fn used(&self)-> bool; // returns increases client usageCount in db by +1
 }
 
-#[async_trait]
 impl usage for SClient{
 
-    async fn available(&self) -> bool{
+     fn available(&self) -> bool{
+
         let connection: Connection = sqlite::open("database.sqlite").unwrap();
+        let mut usageCount:i128 = 0;
+
         connection
-        .iterate("SELECT usageCount,usageMax FROM clients WHERE ", |pairs| {
+        .iterate(format!("SELECT usageCount,usageMax FROM clients WHERE id = '{}' ",&self.id), |pairs| {
             for &(name, value) in pairs.iter() {
-                println!("{} = {}", name, value.unwrap());
+                if name == "usageCount" {
+                    usageCount = value.unwrap().parse::<i128>().expect("Faiiled to parse usageCount");
+                }else{
+                    if usageCount+1 > value.unwrap().parse::<i128>().expect("failed to parse"){
+                        return false
+                    }
+
+                }
             }
             true
         })
@@ -34,13 +43,17 @@ impl usage for SClient{
 
         return true
     }
-    async fn used(&self) -> bool{
+     fn used(&self) -> bool{
 
         return false
     }
 }
+
+
+// GETTING /GENERATING CLIENTS
 use uuid::Uuid;
 use rand::Rng;
+
 pub async fn get() -> SClient{
 
     let mut client: SClient;
@@ -67,8 +80,12 @@ pub async fn get() -> SClient{
                 usageMax: map.get("usageMax").expect("Failed to convert userAgent").to_owned()
                 .parse::<i128>().expect("failed to parse integer from string")
 
-            }
-        }
+            };
+
+           /*  let avail = client.available(); */
+
+        } // ok
+
 
         // If no client was found
         Err(error) =>{
@@ -105,6 +122,7 @@ pub async fn get() -> SClient{
                 usageCount: 0,
                 usageMax: i128::try_from(maxUse).unwrap(),
             };
+
 
             // Creating database connection -> creating client entry/row   
             let connection: Connection = sqlite::open("database.sqlite").unwrap();
