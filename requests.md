@@ -2,7 +2,7 @@
 
 ## GET | api/recommend
 ```
-mermaid
+
 graph TD
     getrecommend(GET api/recommend) --> getClient(Get a client from DB)
     getClient --> noClientInDB(None in DB) --> 
@@ -13,4 +13,4 @@ graph TD
     
     reqWithClient(Make request with the client) --> OrganizeData(Strip only the useful data) --> CreateproxyLinks(Create proxy links)
     --> buildJSON(Build response JSON) --> respond(Send Response)
-```
+```mermaid
