@@ -4,7 +4,7 @@
 
 
 ```mermaid
-flowchart LR
+graph TD
     getrecommend(GET api/recommend) --> getClient(Get a client from DB)
     getClient --> noClientInDB(None in DB) --> 
     genRandom(Generate random params and user agent) -->
