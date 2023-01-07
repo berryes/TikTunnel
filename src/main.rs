@@ -99,7 +99,7 @@ async fn main() -> Result<(), rocket::Error> {
         File::create("database.sqlite").expect("DB already exists");
     };
     DAO::initDB();
-    
+
 
 
     // random.js validation & checking

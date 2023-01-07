@@ -44,23 +44,25 @@ pub async fn cookie(agent:String) -> Result<Vec<String>,String> {
 use serde_json::Value;
 pub  async fn recommend( params:String, client:SClient) -> Reccomendation {
 
-    let mut baseURL:Url = Url::parse("https://www.tiktok.com/api/recommend/item_list/")
+    let mut baseURL:Url = Url::parse(&dotenv::var("RECOMMEND_URL").expect("Failed to get RECOMMEND_URL"))
     .expect("failed to parse url");
 
-    baseURL.set_query( Some( format!("{}",params).as_str() ));
-    
 
-    println!("{}",baseURL);
+    /*     baseURL.set_query( Some( format!("{}",params).as_str() ));
+ */    
+
+
+    println!("URL: {}",baseURL);
 
     // Generating Reqwest client
     let timeout = Duration::new(5,0);
     let reqClient =  ClientBuilder::new().timeout(timeout).build().expect("no client xd");
     
 
-
     // headers
     let mut headers = HeaderMap::new();
     headers.insert("User-Agent", client.userAgent.parse().unwrap() );
+    headers.insert("Cookie", client.cookie.parse().unwrap() );
     // ^^^ user agent has to be the as the agent which we scraped the cookie with ()
 
 

@@ -87,7 +87,7 @@ pub fn recommendation(jData:serde_json::Value) -> Reccomendation {
         let stream: Stream = Stream { 
             cover: video["video"]["cover"].to_string(),
             urls: urls,
-            heigth: 100,
+            heigth: 200,
             width: 200,
         };
 
