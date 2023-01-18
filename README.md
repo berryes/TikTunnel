@@ -56,7 +56,7 @@ Well first of all is actually writing the program. But neverless here are some f
 
 # Contributing
 You can always make a pull request if you have a fix for a possible bug or idea.
-If you wanto help me reverse engineer the API you can always reach me at 
+If you want to help me reverse engineer the API you can always reach me at 
 [#tiktunnel:berryez.xyz](https://matrix.to/#/#tiktunnel:berryez.xyz)
 
 # API
