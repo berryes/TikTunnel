@@ -18,6 +18,7 @@ An API for scraping tiktoks (written in Rust!)
 This program scrapes data from Tiktok and serves an endpoint to safely view the content. 
 
 ### Current status: <p style="color:purple"> Reverse engineering API... </p>
+Note: I lost motivation for researching tiktoks api and because of that the project has been put to a hold.
 
 ## Todo / plans
 Well first of all is actually writing the program. But neverless here are some features I want to implement in the near future. 
